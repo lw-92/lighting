@@ -5,15 +5,16 @@ import com.lighting.core.flow.FlowWorkHandler;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.util.DaemonThreadFactory;
 import org.apache.commons.lang3.StringUtils;
-
 import java.util.Objects;
 import java.util.stream.IntStream;
+
 
 public class DisruptorFactory {
 
     public static final String LIGHTING_CORE_SIZE_KEY = "lightCoreSize";
 
     private static volatile Disruptor defaultDisruptor;
+
     private static Object lock=new Object();
 
     /**
