@@ -1,4 +1,4 @@
-package com.lighting.core;
+package com.lighting.core.flow;
 
 import com.lmax.disruptor.WorkHandler;
 import lombok.AllArgsConstructor;

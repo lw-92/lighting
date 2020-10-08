@@ -1,4 +1,4 @@
-package com.lighting.core;
+package com.lighting.core.flow;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
