@@ -1,7 +1,10 @@
 package com.lighting.core.flow;
 
+import com.lighting.core.lmax.DisruptorFactory;
 import com.lmax.disruptor.dsl.Disruptor;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -56,6 +59,31 @@ public class Flow<T> {
     }
 
     public void start() {
+        Disruptor<FlowEvent<T>> disruptor = Optional.ofNullable(publishOn).orElse(DisruptorFactory.getDefaultDisruptor());
+        Optional.ofNullable(arrayData).ifPresent(datas->{
+            Arrays.stream(datas).forEach(t->{
+                disruptor.publishEvent((event, seq, data) -> {
+                    event.setSequence(seq);
+                    event.setData(data);
+                    event.setOnCompleted(onCompleted);
+                    event.setOnError(onError);
+                    event.setSubscribe(subscribe);
+                }, t);
+            });
 
+        });
+
+        Optional.ofNullable(streamData).ifPresent(streamDatas->{
+            streamDatas.forEach(t->{
+                disruptor.publishEvent((event, seq, data) -> {
+                    event.setSequence(seq);
+                    event.setData(data);
+                    event.setOnCompleted(onCompleted);
+                    event.setOnError(onError);
+                    event.setSubscribe(subscribe);
+                }, t);
+            });
+        });
     }
+
 }
