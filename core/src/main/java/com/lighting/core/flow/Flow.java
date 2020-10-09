@@ -4,6 +4,7 @@ import com.lighting.core.lmax.DisruptorFactory;
 import com.lmax.disruptor.dsl.Disruptor;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -59,6 +60,9 @@ public class Flow<T> {
     }
 
     public void start() {
+        if(Objects.isNull(subscribe)){
+            throw new RuntimeException("subscribe can't be null");
+        }
         Disruptor<FlowEvent<T>> disruptor = Optional.ofNullable(publishOn).orElse(DisruptorFactory.getDefaultDisruptor());
         Optional.ofNullable(arrayData).ifPresent(datas->{
             Arrays.stream(datas).forEach(t->{
@@ -85,5 +89,6 @@ public class Flow<T> {
             });
         });
     }
+
 
 }
