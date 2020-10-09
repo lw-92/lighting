@@ -14,7 +14,7 @@ public class FlowWorkHandler<T> implements WorkHandler<FlowEvent<T>> {
 
     @Override
     public void onEvent(FlowEvent<T> event) throws Exception {
-        log.debug("work handler start:{}", handlerName);
+        log.info("work handler start:{}", handlerName);
         T data = event.getData();
         Optional.ofNullable(event.getSubscribe()).ifPresent(tConsumer -> {
             try {
